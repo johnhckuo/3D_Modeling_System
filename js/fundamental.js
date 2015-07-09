@@ -271,7 +271,7 @@ scene.add(particleSystem);
 	window.addEventListener( 'resize', onWindowResize, false );
 	window.addEventListener('keydown',keyboardMove,false); 
 	document.getElementById("clickMe").addEventListener("click" , extendPanel , false);
-	document.getElementById("clickSTL").addEventListener("click" , extendPanel , false);
+//	document.getElementById("clickSTL").addEventListener("click" , extendPanel , false);
 	document.getElementById("clickControl").addEventListener("click" , extendControl , false);
 	document.getElementById("tutorial").setAttribute("style","-webkit-transform:translateY(100px)");
 	
