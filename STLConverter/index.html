@@ -1,0 +1,56 @@
+<html>
+<head>
+<style>
+	.on{
+		opacity:1;
+	}
+	.off{
+		opacity:0;
+	}
+	#main{
+		margin:0 auto;
+	}
+	#loading{
+		margin:0 auto;
+		transition:all 1s;
+	}
+	body{
+		background-color:#000000;
+		color:#ffffff;
+	}
+</style>
+</head>
+<body>
+<div id='main'>
+<form action="upload.php" method="post" enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file"><br>
+<input type="submit" name="submit" id='submit' value="Submit">
+</form>
+</div>
+<div id='loading' class='off'>
+	<img src="loading.gif" >
+</div>
+</body>
+<script>
+        function $(id){
+                return document.getElementById(id);
+        }
+        $('submit').addEventListener("click",function(){ $('loading').className='on'; },false);
+        function loading(){
+                $("loading").className='on';
+        }
+</script>
+<style>
+        .on{
+                opacity:1;
+        }
+        .off{
+                opacity:0;
+        }
+        #loading{
+                -webkit-transition:all 1s;
+        }
+</style>
+
+</html>

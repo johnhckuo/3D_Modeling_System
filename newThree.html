@@ -1,0 +1,306 @@
+<html>
+	<head>
+		<title>My first Three.js app</title>
+		<style>
+		canvas { 
+		width: 100%; height: 100% 
+		}
+		#div1{
+			position:absolute;
+			
+		}
+		#attribute{
+			position:absolute;
+			top:10px;
+			left:10px;
+			color:#ffffff;
+			font-size:20;
+			font-family:Times New Roman;
+			position:absolute;
+			margin-top:20px;
+			margin-left:20px;
+			border-style:dashed;
+			padding-top:15px;
+			padding-bottom:15px;
+			padding-right:15px;
+			padding-left:15px;
+		}
+	
+		
+		#loading{
+			position:absolute;
+			-webkit-transition: all 1s;
+			width:100%;
+			height:100%;
+			display:none;
+		}
+		
+		#img1{
+			position:relative;
+			left:-15px;
+			top:50%;
+			width:100%;
+			height:200px;
+			margin-top:-100px;
+
+		}
+		
+		</style>
+	</head>
+	<body>
+		
+		<script src="js/drag.js"></script>
+		
+		<script src="js/THREEx.GeometryUtils.js"></script>
+		
+		<script src="js/ThreeText.js"></script>
+		<script src="js/three.js"></script>
+		<script src="js/csg.js"></script>
+		<script src="js/ThreeCSG.js"></script>
+		
+		<script src="js/TrackballControls.js"></script>
+		<script src="js/drag.js"></script>
+		<script src="js/Stats.js"></script>
+		<script src="fonts/helvetiker_bold.typeface.js"></script>
+		<script src="fonts/helvetiker_regular.typeface.js"></script>
+		<script src="fonts/optimer_bold.typeface.js"></script>
+		<script src="fonts/optimer_regular.typeface.js"></script>
+		<script src="fonts/gentilis_bold.typeface.js"></script>
+		<script src="fonts/gentilis_regular.typeface.js"></script>
+		<script src="js/FileSaver.js"></script>
+		<script src="js/axes.js"></script>
+		<script src="js/STLcreator.js"></script>
+		<script src="js/customize.js"></script>
+		<script src="js/STLLoader.js"></script>
+		<script src="js/STLreader.js"></script>
+		
+		<div id='div1'>
+			
+				<div id='loading'>
+					<img id="img1" src='img/loading.png' />
+				</div> 
+		
+			<div id = "attribute">
+				<h1> 3D Text Attribute</h1>
+				Text:<input type='text' id='custom' onKeyPress="customize('text')" onKeyUp="customize('text')" value='Hello'/><p>
+				Size:<input type='text' id='textSize' onKeyPress="customize('size')" onKeyUp="customize('size')" value='50' /><p>
+				Thickness:<input type='text' id='textHeight' onKeyPress="customize('height')" onKeyUp="customize('height')" value='50'/><p>
+				Font-Family:<form name='myfont'>
+				<input type="radio"  name='font' onclick="customize('font');" value='gentilis' />Gentilis
+				<input type="radio"  name='font' onclick="customize('font');" value='helvetiker' checked />Helvetiker
+				<input type="radio"  name='font' onclick="customize('font');" value='optimer' />Optimer
+				</form><p>
+				Model Creator:<br />
+				<input type='button' value='Cube' onclick='cubeCreator();'/>
+				<input type='button' value='Circle' onclick='sphereCreator();'/><p>
+				<input type='button' value='Cylinder' onclick='cylinder();'/><p>
+				RingText:<input type='text' id='ringText'/><p>
+				<input type='button' value='Ring Creator' onclick='ringCreator();'/><p>
+				<input type='button' value='STL' onclick='save();'/><p>
+				<input type='button' value='Paint' onclick='reStart();'/><p>
+				
+			</div>
+		</div>
+		<script>
+		
+
+	// standard global variables
+
+var container, scene,sceneCube, camera, plane, renderer, controls , textMesh, textColor=0xdddddd,custom="Hello", textSize=50,textHeight=30 ,textFont='helvetiker';
+var currentObject;
+function $(id){
+	return document.getElementById(id);
+}
+
+
+function init() {
+
+    // SCENE
+    scene = new THREE.Scene();
+
+    // CAMERA
+
+    var VIEW_ANGLE = 45, ASPECT = window.innerWidth/window.innerHeight, NEAR = 0.1, FAR = 20000;
+    camera = new THREE.PerspectiveCamera( VIEW_ANGLE, ASPECT, NEAR, FAR);
+    scene.add(camera);
+    camera.position.set(0,0,500);
+	
+	//  camera.lookAt(scene.position);
+    renderer = new THREE.WebGLRenderer( {antialias:true, alpha: true } );
+    renderer.setSize(window.innerWidth, window.innerHeight);
+	renderer.setClearColor( 0x000000, 1 );
+    container = document.getElementById( 'div1' );
+    container.appendChild( renderer.domElement );
+	
+	
+	
+	// CONTROLS
+	controls = new THREE.TrackballControls( camera, renderer.domElement );
+	controls.rotateSpeed = 1.0;
+	controls.zoomSpeed = 1.2;
+	controls.panSpeed = 0.2;
+	 
+	controls.noZoom = false;
+	controls.noPan = false;
+	 
+	controls.staticMoving = false;
+	controls.dynamicDampingFactor = 0.3;
+	 
+	controls.minDistance = 0.1;
+	controls.maxDistance = 20000;
+	 
+	controls.keys = [ 16, 17, 18 ]; // [ rotateKey, zoomKey, panKey ]
+	
+
+
+	//stat
+    stats = new Stats();
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.right = '0px';
+    stats.domElement.style.top = '0px';
+    container.appendChild(stats.domElement);
+
+    // LIGHT
+    var light = new THREE.PointLight(0xffffff,2);
+	light.position.set(0,500,500);
+
+    scene.add(light);
+
+	
+	
+    // add 3D text default
+
+	
+	
+	var material = new THREE.MeshPhongMaterial({
+		color: textColor,
+		shininess: 30,
+		specular: 0x555555
+	});
+	var textGeom = new THREE.TextGeometry( custom, {
+		font: textFont,
+		size: textSize,
+		height: textHeight,
+		curveSegments: 10,
+		bend:true
+	});
+	
+	textMesh = new THREE.Mesh( textGeom, material );
+	textGeom.computeBoundingBox();
+	var textWidth = textGeom.boundingBox.max.x - textGeom.boundingBox.min.x;
+	//textMesh[i].rotation.x=Math.PI*1.5;
+	textMesh.position.set( 0, 0,-100 );  
+	currentObject = textMesh;
+	scene.add( textMesh );
+		
+
+//	THREE.GeometryUtils.merge(geometryMerge, textMesh[0]);                     // --------------------STL converter modified
+	
+	
+	
+	//fog 
+	scene.fog = new THREE.Fog(0xffffff,100,20000);
+	
+	
+	//skybox
+	/*var imagePrefix = "img/";
+	var imageSuffix = ".jpg";
+	var skyGeometry = new THREE.BoxGeometry( 5000, 5000, 5000 );	
+	var materialArray = [];
+
+	for (var i = 0; i < 6; i++)
+		materialArray.push( new THREE.MeshBasicMaterial({
+			map: THREE.ImageUtils.loadTexture( imagePrefix + 'back' + imageSuffix ),
+			side: THREE.BackSide
+		}));
+	
+	var skyBox = new THREE.Mesh( skyGeometry, materialArray );
+	scene.add( skyBox );*/
+	//================================
+	var geometry = new THREE.CubeGeometry( 1000, 1000, 1000 );
+
+	var texture = THREE.ImageUtils.loadTexture(  "img/back.jpg" );
+	texture.wrapS = texture.wrapT = THREE.RepeatWrapping;
+	texture.repeat.set( 10, 10 );
+
+	var material = new THREE.MeshBasicMaterial( {
+		color: 0xffffff, 
+		map: texture,
+		side: THREE.BackSide
+	} );
+
+	var mesh = new THREE.Mesh( geometry, material );
+	scene.add( mesh );
+
+	
+	//axes
+//	axes = buildAxes( 2500 );
+//	scene.add(axes);
+
+	
+	
+	
+	// EventListener
+//	renderer.domElement.addEventListener( 'mousemove', onDocumentMouseMove, false );
+//	renderer.domElement.addEventListener( 'mousedown', onDocumentMouseDown, false );
+//	renderer.domElement.addEventListener( 'mouseup', onDocumentMouseUp, false );
+	
+//	renderer.domElement.addEventListener('dblclick', lockDown , false);
+	
+	window.addEventListener( 'resize', onWindowResize, false );
+	
+}
+
+function loading(flag){
+//	background.style.opacity = 0;
+	var div = document.getElementById("loading");
+	if (flag == 1){
+		div.style.display='inline';
+	}else if (flag == 0 ){
+		div.style.display='none';
+	}
+	
+}
+
+function onWindowResize() {
+
+	camera.aspect = window.innerWidth / window.innerHeight;
+	camera.updateProjectionMatrix();
+	renderer.setSize( window.innerWidth, window.innerHeight );
+
+}
+
+function save() {
+	loading(1);
+
+		var stl = startExport();
+		var blob = new Blob([stl], {type: 'text/plain'});
+		saveAs(blob, 'test.stl');
+		
+}
+
+function startExport(){
+    exportGeo = removeDuplicateFaces( geometryMerge );
+    //THREE.GeometryUtils.triangulateQuads( geometryMerge );
+	
+    var stl = generateSTL();
+	if (convertFlag)
+		loading(0);
+    return stl;
+}
+
+	
+function animate() {
+	window.requestAnimationFrame( animate );
+	stats.update();
+	controls.update(); //for cameras
+	renderer.render( scene, camera );
+}
+	
+init();
+animate();
+
+		</script>
+	
+	</body>
+</html>
