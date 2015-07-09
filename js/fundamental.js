@@ -343,10 +343,10 @@ function showbasicHelp(){
 function extendPanel(event){
 	if (event.target.parentNode.id == lastTarget && extended){
 		document.getElementById("attribute").setAttribute("style","-webkit-transform:translateX(0px)");
-		document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(0px)");
+	//	document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(0px)");
 	}else{
 		document.getElementById("attribute").setAttribute("style","-webkit-transform:translateX(-65px)");
-		document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(-65px)");
+	//	document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(-65px)");
 		document.getElementById(event.target.parentNode.id).setAttribute("style","-webkit-transform:translateX(365px)");
 	}
 	extended = !extended;
@@ -395,14 +395,14 @@ function save() {
 		}
 
 		var filename = 'model.stl';
-		var formData = new FormData();
+	//	var formData = new FormData();
 		checkPrint = 1;
 		
 		loading(1);
 		var stl = startExport();
 		var blob = new Blob([stl], {type: 'text/plain'});
-	//	saveAs(blob, filename);                                            //Download File?
-		
+		saveAs(blob, filename);                                            //Download File?
+/*		
 		formData.append("file", blob ,filename);
 
 		var xhr = new XMLHttpRequest();
@@ -413,12 +413,12 @@ function save() {
 		  } else {
 			alert('An error occurred!');
 		  }
-		//  gCode();
+		  gCode();
 		};
 		xhr.open("POST", "upload.php",true);
 		xhr.send(formData);
 		
-		
+*/		
 		
 		
 }
