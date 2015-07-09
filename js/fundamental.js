@@ -272,7 +272,6 @@ scene.add(particleSystem);
 	window.addEventListener('keydown',keyboardMove,false); 
 	document.getElementById("clickMe").addEventListener("click" , extendPanel , false);
 	document.getElementById("clickSTL").addEventListener("click" , extendPanel , false);
-	document.getElementById("clickfooter").addEventListener("click" , extendPanel , false);	
 	document.getElementById("clickControl").addEventListener("click" , extendControl , false);
 	document.getElementById("tutorial").setAttribute("style","-webkit-transform:translateY(100px)");
 	
@@ -345,11 +344,9 @@ function extendPanel(event){
 	if (event.target.parentNode.id == lastTarget && extended){
 		document.getElementById("attribute").setAttribute("style","-webkit-transform:translateX(0px)");
 		document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(0px)");
-		document.getElementById("category_frame").setAttribute("style","-webkit-transform:translateX(0px)");
 	}else{
 		document.getElementById("attribute").setAttribute("style","-webkit-transform:translateX(-65px)");
 		document.getElementById("stlViewer").setAttribute("style","-webkit-transform:translateX(-65px)");
-		document.getElementById("category_frame").setAttribute("style","-webkit-transform:translateX(-65px)");
 		document.getElementById(event.target.parentNode.id).setAttribute("style","-webkit-transform:translateX(365px)");
 	}
 	extended = !extended;
