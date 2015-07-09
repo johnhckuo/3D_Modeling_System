@@ -1,6 +1,5 @@
 function CollapseExpand(id) {
 			var divObject = document.getElementById(id);
-			console.log(divObject);
 			var currentCssClass = divObject.className;
 			if (divObject.className == "modelon"){
 			//	showbasicHelp();
