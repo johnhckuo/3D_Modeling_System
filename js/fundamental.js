@@ -404,6 +404,9 @@ function save() {
 	//	saveAs(blob, filename);                                            //Download File?
 		
 		formData.append("file", blob ,filename);
+		STLviewer(filename);
+		extendSTL();
+		/*
 		var xhr = new XMLHttpRequest();
 		xhr.onload = function () {
 		  if (xhr.status == 200) {
@@ -416,7 +419,7 @@ function save() {
 		};
 		xhr.open("POST", "upload.php",true);
 		xhr.send(formData);
-		
+		*/
 		
 		
 		
