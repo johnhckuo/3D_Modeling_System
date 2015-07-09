@@ -1,58 +1,629 @@
-<!DOCTYPE html>
-<html lang="en-us">
-  <head>
-    <meta charset="UTF-8">
-    <title>3d modeling system by johnhckuo</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
-    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
-    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
-  </head>
-  <body>
-    <section class="page-header">
-      <h1 class="project-name">3d modeling system</h1>
-      <h2 class="project-tagline"></h2>
-      <a href="https://github.com/johnhckuo/3D_Modeling_System" class="btn">View on GitHub</a>
-      <a href="https://github.com/johnhckuo/3D_Modeling_System/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/johnhckuo/3D_Modeling_System/tarball/master" class="btn">Download .tar.gz</a>
-    </section>
+﻿<html>
+	<head>
+		<title>3Dink</title>
+		<link rel="stylesheet" type="text/css" href="css/three.css" >
+		<link rel="stylesheet" type="text/css" href="../css/fixbar.css" >
+		<style type="text/css">
+			
+		</style>
+	</head>
+	<body style="overflow-x: hidden;margin:0 0 0 0 ;background-color:#333333;">
 
-    <section class="main-content">
-      <h3>
-<a id="welcome-to-github-pages" class="anchor" href="#welcome-to-github-pages" aria-hidden="true"><span class="octicon octicon-link"></span></a>Welcome to GitHub Pages.</h3>
+		<div class="navbar navbar-fixed-top" id='headerlink'>
+			<div class="navbar-inner" >
+			<div class='fixbarleft' id='fixbarleft'><img src='../img/fixbar_left.png'></div>
+				<div class="navcontainer" >
+					<ul class="nav searchbox">
+						<li><input type="text" id='searchbox'  placeholder="搜尋" style="font-color:#a1a1a1" onkeydown="search()"></li>
+					</ul> 
+					<ul class="nav button">
+							<li><a href=".."><img src="../img/forum.png"></a></li>
+							<li><a href="../jsstl-master/index.php"><img src="../img/print.png"></a></li>
+							<li><a href="../newShowmode/index.php"><img src="../img/platform.png"></a></li>
+							<li><a href="../zhen/forum/forum_index.php"><img src="../img/forum.png"></a></li>	
+					</ul>
+					<span class="logo"><a href="../index.php"><img src="../img/print_img/choose.png"></a></span>
+					<span class="nav uploadbutton" ><a href="../showMode/file_upload.php"><img src="../img/upload.png"></a></span>
+				</div>
+				<div class='fixbarright' id='fixbarright'><img src='../img/fixbar_right.png'></div>
+			</div>
+		</div>
+		<script src="js/modernizr.custom.93389.js"></script>
+		<script src="js/drag.js"></script>
+		<script src="js/THREEx.GeometryUtils.js"></script>
+		<script src="js/ThreeText.js"></script>
+		<script src="js/three.js"></script>
+		<script src="js/FirstPersonControls.js"></script>
+		<script src="js/csg.js"></script>
+		<script src="js/ThreeCSG.js"></script>
+		<script src="js/TrackballControls.js"></script>
+		<script src="js/drag.js"></script>
+		<script src="js/Stats.js"></script>
+		<script src="fonts/helvetiker_bold.typeface.js"></script>
+		<script src="fonts/helvetiker_regular.typeface.js"></script>
+		<script src="fonts/optimer_bold.typeface.js"></script>
+		<script src="fonts/optimer_regular.typeface.js"></script>
+		<script src="fonts/gentilis_bold.typeface.js"></script>
+		<script src="fonts/gentilis_regular.typeface.js"></script>
+		<script src="js/FileSaver.js"></script>
+		<script src="js/axes.js"></script>
+		<script src="js/STLcreator.js"></script>
+		<script src="js/customize.js"></script>
+		<script src="js/STLLoader1.js"></script>
+		<script src="js/STLreader.js"></script>
+	
+		
+		<script src="js/fundamental.js"></script>
+		
+		
+		<div id="tutorial">
+			<div id="tutorialBackground"></div>
+			<div id='tutorialContent'>
+				<h1>歡迎來到 3D印客 線上3D繪圖模式</h1>
+				<h3>使用說明</h3>
+				<ul>
+					<li>右上角畫面之FPS代表目前瀏覽器處理效能，平均分數為45~60，若低於45，建議重新整理瀏覽器。</li>
+					<li>3D繪圖區域僅限於起始畫面所見之透明方格面板，其餘地方無法建模。</li>
+					<li>3D模型以及印章可使用滑鼠進行拖曳，並且刪除(針對物件連點兩下)。</li>
+					<li>特殊模式(3D手繪模式、MineCraft模式)執行時，若欲切換其他模式，請先關閉目前繪圖模式。</li>
+					<li>操作說明</li>
+					<ul>
+						<li>滑鼠左鍵按住並且移動 → 選轉視角。</li>
+						<li>滑鼠右鍵按住並且移動 → 平移視角。</li>
+						<li>左鍵點擊3D模型以及印章 → 拖曳物件。</li>
+						<li>左鍵快速連點3D模型以及印章 → 刪除物件。</li>
+					</ul>
+					<li>若完成作品，可開始進行轉檔並列印的步驟。</li>
+					<ul>
+						<li>按下「STL 轉檔」</li>
+						<li>按下「Gcode 轉檔」</li>
+						<li>按下「線上列印」，並跳轉至列印設定頁面</li>
+					</ul>
+					<li>為了您的最佳瀏覽體驗，瀏覽器建議使用Google Chrome 版本 35.0.1916.153 m 或以上版本</li>
+			   </ul>
+				
+			</div>
+			<input type='button' id="tutorialButton" class ='threeButton' value='開始繪圖' onclick='stopTutorial();'/>  
+		</div>
+		
+		
+		<div id='div1'>
+			<div id = 'helper'>
+				<div id = 'delete' onclick='hideHelp()'><img src='img/delete.png' onclick='hideHelp()'></img></div>
+				<div id = 'helperContent' class="show">
+				<h2>歡迎來到3Dink繪圖系統</h2>
+				1. 點選左邊的面板以生成3D模型。<p>
+				2. 若右上角效能偵測指數低於50fps，請查看連線品質。<p>
+				3. 本系統紅色軸線為X軸，黃色為Y軸，藍色為Z軸，虛線則為該軸負值區域。
+				</div>
+				<div id = 'helperContent2' class="hide">
+				</div>
+				<div id = 'helperback'></div>
+			</div>
+			<div id='loading'>
+				<img id="img1" src='img/loading.png' />
+			</div> 
+			
+			<div id = "attribute">
+				<div id='clickMe'>Attribute</div>
+				
+				
+				
+				<div class = 'background'></div>
+				<h2> 建立3D模型</h2>
+				<div id="textmodel" class="textmodel" onclick="return CollapseExpand1()">
+					<h3>3D 文字</h3>
+				</div>
+				<div id="modeloff1" class="modeloff">	
+					<hr>
+					3D 文字：  <input type='text' id='custom' class ='threeText'  placeholder="請輸入英文"/><p>
+					文字尺寸： <input type='text' id='textSize' class ='threeText'  value='20' size='3'/>
+					文字厚度： <input type='text' id='textHeight' class ='threeText' value='20' size='3'/><p>
+					文字字體： 
+					<select id="font" >
+					 <option value='gentilis'>Gentilis</option>
+					 <option value='helvetiker'>Helvetiker</option>
+					 <option value='optimer'>Optimer</option>
+					</select><p>
+					<div class="centerer">
+					<input type='button' class ='threeButton' value='產生模型' onclick='customize();'  style="width:100px;  "/>
+					</div>
+				</div>
+				<hr>
+				<div id="stampmodel" class="stampmodel" onclick="return CollapseExpand2()">
+					<h3>印章模型</h3>
+				</div>
+				<div id="modeloff2" class="modeloff">	
+					<hr>
+					印章文字：<input type='text' id='stampText' class ='threeText' size="8" placeholder="請輸入英文"/>&nbsp &nbsp
+					文字尺寸：<input type='text' id='stampTextSize' class ='threeText'  size="4"/><p>
+					<div class="centerer">
+						<input type='button' class ='threeButton' value='產生模型' onclick='stamp();' style="width:100px;"/> 
+					</div>
+				</div>
+				<hr>
+		<!--	<input type='button' class ='threeButton' value='Ring Creator' onclick='ringCreator();'/>
+				<input type='button' class ='threeButton' value='Eraser' onclick='lockDown();'/><p>
+				<input type='button' class ='threeButton' id='convert' value='JuJu Ring' onclick=" STLreader('1'); "/>
+				<input type='button' class ='threeButton' id='convert' value='Empty Ring' onclick=" STLreader('2'); "/>   -->
+				<div id="paintmodel" class="paintmodel" onclick="return CollapseExpand3()">
+					<h3>3D手繪模式</h3>
+				</div>
+				<div id="modeloff3" class="modeloff">	
+					<hr>
+					3D手繪模式：&nbsp &nbsp <input type='button'  id='3dpaint' class ='threeButton' value='開啟' style="width:180px;" onclick=" reStart(); "/><p>
+					<span id='painter'>筆刷粗細</span> &nbsp &nbsp <input type="range" name="rangeInput" min="1" max="5" step="2" onchange="painterCustomize(this.value)" style="width:200px; " ><p>                                                       
+					目前所在層數： 第<input type='text' id='currentLayer' class ='threeText'  size="2" value='0'/>層 &nbsp &nbsp
+					<input type='button'  id='3dpaintLayer' class ='threeButton' value='上一層' onclick=" paintLayer(1); "/> &nbsp
+					<input type='button'  id='3dpaintLayer' class ='threeButton' value='下一層' onclick=" paintLayer(-1); "/><p>
+					複製<input type='text' id='fromLayer' class ='threeText'  size="1"/>
+					層至<input type='text' id='toLayer' class ='threeText'  size="1"/>層 &nbsp
+					<input type='button'  id='layerCopy' class ='threeButton' value='複製單層' onclick=" copyLayer(); "/>
+					<input type='button'  id='layersCopy' class ='threeButton' value='複製多層' onclick=" copyLayers(); "/>
+				</div>
+				<hr>
+				<div id="othermodel" class="othermodel" onclick="return CollapseExpand4()">
+					<h3>其他3D模型</h3>
+				</div>
+				<div id="modeloff4" class="modeloff">
+					<hr>
+					<input type='button'  class ='threeButton' value='環面結' onclick='torusCreator();'/>&nbsp &nbsp
+					<input type='button' class ='threeButton' value='圓球' onclick='sphereCreator();' />&nbsp &nbsp 
+					<input type='button' class ='threeButton' value='圓柱' onclick='cylinder();' />&nbsp &nbsp 
+					<input type='button' class ='threeButton' value='管子' onclick='shape();' />&nbsp &nbsp 
+					<input type='button' class ='threeButton' value='環面' onclick='torus();' />&nbsp &nbsp <p>
+					方塊寬度：<input type='text' id='voxelLength' class ='threeText'  size="2"/>cm &nbsp &nbsp
+					<input type='button'  id='minecraft' class ='threeButton' value='MineCraft' onclick=" voxelPainter(); " onmouseover="over();" onmouseout="out();" style="width:100px;"/><p>
+				</div>
+				<hr>
+				<div id="housemodel" class="housemodel" onclick="return CollapseExpand5()">
+					<h3>房屋</h3>
+				</div>
+				<div id="modeloff5" class="modeloff">
+					<hr>
+					
+					<input type='button' class ='threeButton' value='椅子' onclick='chair();' />&nbsp &nbsp
+					<input type='button' class ='threeButton' value='桌子' onclick='desk();' />&nbsp &nbsp 
+					<input type='button' class ='threeButton' value='牆壁' onclick='wall();' />&nbsp &nbsp  
+					<input type='button' class ='threeButton' value='屋頂' onclick='roof();' />&nbsp &nbsp  
+					<input type='button' class ='threeButton' value='窗戶' id='window'onclick='windowMaker();' />&nbsp &nbsp
+					<input type='button' class ='threeButton' value='種樹' id='tree' onclick='addTree();' />
+					  <p>
+					房高：<input type='text' id='houseHeight' class ='threeText'  size="1"/>
+					房寬：<input type='text' id='houseWidth' class ='threeText'  size="1"/>
+					房長：<input type='text' id='houseLength' class ='threeText'  size="1"/>
+					<input type='button' class ='threeButton' value='房屋結構' onclick='foundation();' />&nbsp &nbsp <p>
+					
+					柵欄寬度：<input type='text' id='fenceLength' class ='threeText' size="1"/>
+					<input type='button' class ='threeButton' value='新增柵欄' id='fence' onclick='fence();' />&nbsp &nbsp <p>
+					&nbsp <input type='button' class ='threeButton' value='室內瀏覽模式' id='designer' onclick='failDesigner();' style="width:280px;"/>&nbsp &nbsp <p>
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here <a href="https://guides.github.com/features/mastering-markdown/">using GitHub Flavored Markdown</a>, select a template crafted by a designer, and publish. After your page is generated, you can check out the new <code>gh-pages</code> branch locally. If you're using GitHub for Mac or GitHub for Windows, simply sync your repository and you'll see the new branch.</p>
+				</div>
+				<hr>
+				<div id="camerawatch" class="camerawatch" onclick="return CollapseExpand6()">
+					<h3>觀看角度</h3>
+				</div>
+				<div id="modeloff6" class="modeloff">
+					<hr>					
+					<input type='button'  class ='threeButton' id="cameraRotate" value='從X軸' onclick="cameraLock('X')" style="width:60px;"/> &nbsp 
+					<input type='button'  class ='threeButton' id="cameraRotate" value='從Y軸' onclick="cameraLock('Y')" style="width:60px;"/> &nbsp 
+					<input type='button'  class ='threeButton' id="cameraRotate" value='從Z軸' onclick="cameraLock('Z')" style="width:60px;"/> &nbsp
+					<input type='button'  class ='threeButton' id="cameraRotate" value='360度觀看' onclick="cameraLock('rotate')" style="width:80px;"/>
+					<hr>
+				</div>
+				<input type='button' class ='threeButton' value='清除畫面' onclick='clearObject();' style="width:130px;"/>&nbsp &nbsp &nbsp
+				<input type='button' class ='threeButton' value='刪除物件' onclick="movementProject('delete')"  style="width:130px;"/><p>
+		
+				&nbsp <input type='button' id ='outputthreeButton' value='輸出3D圖檔' onclick='save();' style="width:270px; "/> &nbsp
+				
+				
+			</div>
+			
+			<div id ="controlPanel">
+				<div id='clickControl'>Advance</div>
+				<div class = 'controlBackground'></div>
+				<div id="ControlTitle"><h2>進階控制</h2></div>
+				
+				Translate：<p>
+				<input type='button' class ='threeButton' value='X+' onclick="movementProject('translatePX')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='X-' onclick="movementProject('translateNX')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='X軸歸零' onclick="movementProject('translate0X')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Y+' onclick="movementProject('translatePY')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Y-' onclick="movementProject('translateNY')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Y軸歸零' onclick="movementProject('translate0Y')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Z+' onclick="movementProject('translatePZ')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Z-' onclick="movementProject('translateNZ')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Z軸歸零' onclick="movementProject('translate0Z')" style="width:80px;"/><p>
+				
+				<hr>
+				Rotation：<p>
+				<input type='button' class ='threeButton' value='X+' onclick="movementProject('rotatePX')" style="width:60px;"/> &nbsp 
+				<input type='button' class ='threeButton' value='X-' onclick="movementProject('rotateNX')" style="width:60px;"/> &nbsp 
+				<input type='button' class ='threeButton' value='X軸歸零' onclick="movementProject('rotate0X')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Y+' onclick="movementProject('rotatePY')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Y-' onclick="movementProject('rotateNY')" style="width:60px;"/> &nbsp 
+				<input type='button' class ='threeButton' value='Y軸歸零' onclick="movementProject('rotate0Y')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Z+' onclick="movementProject('rotatePZ')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Z-' onclick="movementProject('rotateNZ')" style="width:60px;"/> &nbsp 
+				<input type='button' class ='threeButton' value='Z軸歸零' onclick="movementProject('rotate0Z')" style="width:80px;"/> <p>
+				
+				<hr>
+				Scale：<p>
+				<input type='button' class ='threeButton' value='X+' onclick="movementProject('scalePX')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='X-' onclick="movementProject('scaleNX')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='X軸還原' onclick="movementProject('scale0X')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Y+' onclick="movementProject('scalePY')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Y-' onclick="movementProject('scaleNY')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Y軸還原' onclick="movementProject('scale0Y')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='Z+' onclick="movementProject('scalePZ')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Z-' onclick="movementProject('scaleNZ')" style="width:60px;"/> &nbsp
+				<input type='button' class ='threeButton' value='Z軸還原' onclick="movementProject('scale0Z')" style="width:80px;"/> <p>
+				<input type='button' class ='threeButton' value='等比例放大' onclick="movementProject('scaleP')" style="width:100px;"/> &nbsp
+				<input type='button' class ='threeButton' value='等比例縮小' onclick="movementProject('scaleN')" style="width:100px;"/> &nbsp
+				
+			</div>
+			
+			
+			
+			<div id ="stlViewer">
+				<div id='clickSTL'>STL Viewer</div>
+				<div class = 'background'></div>
+				<div id="stlTitle"><h2>STL 3D預覽</h2></div>
+				<div id="stlRenderer"></div>
+				<input type='button'  id='print' class ='threeButton' value='確認列印' onclick='printButton();' onmouseover="hoverPrint();"  onmouseout='outPrint();'/>
+			</div>
+			<!--stl import-->
+			
+			<div id="category_frame">	
+				<div id='clickfooter'>Category</div>
+				<div id="footer">
+					<div id="return-category" type=button onclick="returnCategory();">回類別</div>
+					<div id="category" >
+						<ul>
+							<li type=button onclick='imageRequest(1);'>
+								<span>玩具</span>
+							</li>
+							<li type=button onclick='imageRequest(2);'>
+								<span>公仔</span>
+							</li>
+							<li type=button onclick='imageRequest(3);'>
+								<span>服飾</span>
+							</li>
+							<li type=button onclick='imageRequest(4);'>
+								<span>零件</span>
+							</li>
+							<li type=button onclick='imageRequest(6);'>
+								<span>建築</span>
+							</li>
+							<li type=button onclick='imageRequest(7);'>
+								<span>藝術設計</span>
+							</li>
+							<li type=button onclick='imageRequest(8);' >
+								<span>生活用品</span>
+							</li>
+							<li type=button onclick='imageRequest(9);'>
+								<span>客製化</span>
+							<!--<li type=button onclick='imageRequest(10);'>
+								<img src="img/category/special_dark.png" name="type10" onmouseout="this.src='img/category/special_dark.png'" onmouseover="this.src='img/category/special_bright.png'">
+							</li>-->
+						</ul>
+					</div>
+					<div id="categoryimg"></div>
+					<div id="arrowleft">
+						<div class="arrowpre" id='pre' onclick='pre();'>
+							<img src="img/leftarrowD.png" onmouseout="this.src='img/leftarrowD.png'" onmouseover="this.src='img/leftarrowL.png'">
+						</div>
+					</div>
+					<div id="arrowright">
+						<div class="arrownext" id="next" onclick='next();'>
+							<img src="img/rightarrowD.png" onmouseout="this.src='img/rightarrowD.png'" onmouseover="this.src='img/rightarrowL.png'">
+							<input type="hidden" id="count" name="count" value="0">
+							<div class="clear"></div>
+						</div>
 
-<h3>
-<a id="designer-templates" class="anchor" href="#designer-templates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Designer Templates</h3>
+					</div>
+				</div>
+			</div>
+			<!--end stl import-->
+		</div>
+		
+	
 
-<p>We've crafted some handsome templates for you to use. Go ahead and click 'Continue to layouts' to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved.</p>
 
-<h3>
-<a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span class="octicon octicon-link"></span></a>Creating pages manually</h3>
+		<script>
+			init();
+			animate();
 
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
+			//failDesigner();
+			//fixbar左右補齊
+			document.getElementById("fixbarleft").style.width = (document.getElementById("headerlink").clientWidth-1140)/2 + "px";
+			document.getElementById("fixbarright").style.width = (document.getElementById("headerlink").clientWidth-1140)/2 + "px";
+			document.getElementById("arrowright").style.left = (document.getElementById("headerlink").clientWidth)-50 + "px";
+			//document.getElementById("categoryimg").style.width = (document.getElementById("headerlink").clientWidth) + "px";
+			var aaa = document.getElementById("fixbarright").style.width;
+			
+			//暫時先用這種智障方法...
+			var divID1 = "modeloff1";
+		function CollapseExpand1() {
+			var divObject = document.getElementById(divID1);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+				}, 10);  
+				window.removeEventListener('keydown',keyboardMove,false); //zhen //清除移動圖檔
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				}, 10);  
+			}
+			
+			
+			
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 180;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>3D文字模式教學</h2>此模式可建立英文單字的3D模型，操作流程如下：<p>1. 輸入文字的尺寸大小。<p> 2. 選擇文字厚度。<p>3. 選擇文字字體，目前系統僅支援英文字體。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML = "<h2>3D文字模式教學</h2>此模式可建立英文單字的3D模型，操作流程如下：<p>1. 輸入文字的尺寸大小。<p> 2. 選擇文字厚度。<p>3. 選擇文字字體，目前系統僅支援英文字體。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+		}
+			var divID2 = "modeloff2";
+		function CollapseExpand2() {
+			var divObject = document.getElementById(divID2);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+				}, 10);  
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				}, 10);  
+			}
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 105;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>3D印章模式教學</h2>此模式可建立客製化的個人印章，請先輸入欲刻在印章上的文字，在按下「產生模型」即可完成。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML = "<h2>3D印章模式教學</h2>此模式可建立客製化的個人印章，請先輸入欲刻在印章上的文字，在按下「產生模型」即可完成。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+		}
+			var divID3 = "modeloff3";
+		function CollapseExpand3() {
+			var divObject = document.getElementById(divID3);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+				}, 10);  
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				}, 10);  
+			}
+			
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 270;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>3D手繪模式教學</h2>試想像繪圖面板即為小畫家的畫布，而滑鼠便是筆刷，可直接進行3D圖檔的繪製，其操作流程為：<p>1. 依使用者喜好挑選筆刷粗細。<p>2. 按下「開啟」並進行創作。<p>3. 若要複製特定層數的作品至另外一層，請輸入來源層和目的層，如：複製0層至2層。<p>4. 複製功能又可分為多層複製和單層複製。<p>5. 結束繪畫後，請務必關閉3D手繪模式。<p>附註：3D手繪圖檔轉檔過程較為複雜，請耐心等候。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML = "<h2>3D手繪模式教學</h2>試想像繪圖面板即為小畫家的畫布，而滑鼠便是筆刷，可直接進行3D圖檔的繪製，其操作流程為：<p>1. 依使用者喜好挑選筆刷粗細。<p>2. 按下「開啟」並進行創作。<p>3. 若要複製特定層數的作品至另外一層，請輸入來源層和目的層，如：複製0層至2層。<p>4. 複製功能又可分為多層複製和單層複製。<p>5. 結束繪畫後，請務必關閉3D手繪模式。<p>附註：3D手繪圖檔轉檔過程較為複雜，請耐心等候。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+			
+		}
+			var divID4 = "modeloff4";
+		function CollapseExpand4() {
+			var divObject = document.getElementById(divID4);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+			//		showbasicHelp();
+				}, 10);  
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				}, 10);  
+			}
+			
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 170;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>3D模型建置教學</h2>此模式提供使用者特定的圖形或基本輪廓，達到點綴裝飾的效果，其注意事項如下：<p>1. MineCraft模式開啟前，請先輸入方塊尺寸。<p>2. 產生出的3D模型，皆可透過右邊「Advance」面版進行進階控制。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML = "<h2>3D模型建置教學</h2>此模式提供使用者特定的圖形或基本輪廓，達到點綴裝飾的效果，其注意事項如下：<p>1. MineCraft模式開啟前，請先輸入方塊尺寸。<p>2. 產生出的3D模型，皆可透過右邊「Advance」面版進行進階控制。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+			
+		}
+			var divID5 = "modeloff5";
+		function CollapseExpand5() {
+			var divObject = document.getElementById(divID5);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+					
+				}, 10);  
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				}, 10);  
+			}
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 260;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>3D房屋建置教學</h2>此模式針對模型玩家，提供基本室內模型的建置功能，其教學如下所示：<p>1. 種樹模式為裝飾房屋模型用，無法輸出成3D圖檔。<p>2. 欲建立房屋，請先輸入房屋的長、寬、高。<p>3. 「窗戶」模式僅允許使用者在「房屋」和「牆壁」上建置窗戶，建置完畢後請務必關閉「窗戶」模式。<p>4. 欲使用「柵欄」模式前，請先輸入柵欄長度。<p>5. 全部建置完成後，若使用者想以第一人稱視角瀏覽房屋內部結構，可使用「室內瀏覽模式」。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML ="<h2>3D房屋建置教學</h2>此模式針對模型玩家，提供基本室內模型的建置功能，其教學如下所示：<p>1. 種樹模式為裝飾房屋模型用，無法輸出成3D圖檔。<p>2. 欲建立房屋，請先輸入房屋的長、寬、高。<p>3. 「窗戶」模式僅允許使用者在「房屋」和「牆壁」上建置窗戶，建置完畢後請務必關閉「窗戶」模式。<p>4. 欲使用「柵欄」模式前，請先輸入柵欄長度。<p>5. 全部建置完成後，若使用者想以第一人稱視角瀏覽房屋內部結構，可使用「室內瀏覽模式」。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+		}
+		
+			var divID6 = "modeloff6";
+		function CollapseExpand6() {
+			var divObject = document.getElementById(divID6);
+			console.log(divObject);
+			var currentCssClass = divObject.className;
+			if (divObject.className == "modelon"){
+			//	showbasicHelp();
+				divObject.style.WebkitAnimationName = 'fadin';
+				setTimeout(function () {  
+					divObject.className = "modeloff";
+					
+				}, 10);  
+			}
+			else{
+				divObject.style.WebkitAnimationName = 'fadout';
+				setTimeout(function () {  
+					divObject.className = "modelon";
+				
+				}, 10);  
+			}
+			
+			var helper = document.getElementById('helper');
+			var helperback = document.getElementById('helperback');
+			var content2 = document.getElementById("helperContent2");
+			var content = document.getElementById("helperContent");
+					
+		
+			helper.style.opacity = 1;
+			helperback.style.opacity = .7;
+			helper.style.height = 260;
+			if (content.className == 'show'){
+				document.getElementById("helperContent2").innerHTML = "<h2>觀看角度調整教學</h2>此功能可允許使用者調整視角，並將之調整至最精確的位置，以方便後續繪圖建模的工作，其中需注意「360度觀看」模式開啟前，需先指定一特定物件，方可開啟。";
+				document.getElementById("helperContent2").style.opacity = 1;
+				document.getElementById("helperContent").style.opacity = 0;
+				content.className = 'hide';
+				content2.className = 'show';
+			}
+			else{
+				document.getElementById("helperContent").innerHTML =  "<h2>觀看角度調整教學</h2>此功能可允許使用者調整視角，並將之調整至最精確的位置，以方便後續繪圖建模的工作，其中需注意「360度觀看」模式開啟前，需先指定一特定物件，方可開啟。";
+				document.getElementById("helperContent").style.opacity = 1;
+				document.getElementById("helperContent2").style.opacity = 0;
+				content.className = 'show';
+				content2.className = 'hide';
+			}
+		}
 
-<h3>
-<a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>
-<a id="support-or-contact" class="anchor" href="#support-or-contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out our <a href="https://help.github.com/pages">documentation</a> or <a href="https://github.com/contact">contact support</a> and we’ll help you sort it out.</p>
-
-      <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/johnhckuo/3D_Modeling_System">3d modeling system</a> is maintained by <a href="https://github.com/johnhckuo">johnhckuo</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
-      </footer>
-
-    </section>
-
-  
-  </body>
+		
+		</script>
+	
+	</body>
+	<script src="js/jquery-1.7.1.min.js"></script>
+	
+	<script src="js/bootstrap-modal.js"></script>
+	<script src="js/sugar-1.2.4.min.js"></script>
+	<script src="js/gcode-parser.js"></script>
+	<script src="js/gcode-model.js"></script>
+	<script src="js/Ginit.js"></script>
 </html>
-
