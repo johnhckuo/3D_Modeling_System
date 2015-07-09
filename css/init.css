@@ -52,11 +52,12 @@
 
 		}
 		.panel{
+			position: absolute;
 			height:30px;
-	
+			width: 500px;
 			bottom:5px;
 			right:33%;
-			position: absolute;
+			
 			background-color: rgba(0,0,0,0.5);
 			box-shadow: 0px 5px 10px -1px rgba(0,0,0,0.5);
 			padding:0px 5px;
