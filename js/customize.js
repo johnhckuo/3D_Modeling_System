@@ -544,7 +544,7 @@ function move(event){
 		var intersects = intersectCheck( plane , "div1");
 		
 		if (intersects.length>0){
-			var geometry = new THREE.BoxGeometry( length, length, length );
+			var geometry = new THREE.CubeGeometry( length, length, length );
 			var material = new THREE.MeshPhongMaterial({color: 0xff0000 , transparent : true , opacity:0.5 , side: THREE.DoubleSide});
 			var cube = new THREE.Mesh( geometry, material );
 			cube.position.copy( intersects[0].point );
@@ -733,7 +733,7 @@ function voxelDown(event){
 	materialArray.push(new THREE.MeshBasicMaterial( { map: THREE.ImageUtils.loadTexture( 'img/crate.jpg' ) }));
 */	
 	var intersects = intersectDetector(plane);
-	var geometry = new THREE.BoxGeometry( length, length, length );
+	var geometry = new THREE.CubeGeometry( length, length, length );
 	//var material = new THREE.MeshFaceMaterial(materialArray);
 	var material = new THREE.MeshPhongMaterial({ambient: 0xffff00, color: 0xffffff, specular: 0x555555, shininess: 200, side: THREE.DoubleSide});
 
