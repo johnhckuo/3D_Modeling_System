@@ -767,7 +767,7 @@ function updatePioneer(){
 	var intersects = intersectDetector(plane);
 	var voxelIntersects;
 
-	var geometry = new THREE.BoxGeometry( length, length, length );
+	var geometry = new THREE.CubeGeometry( length, length, length );
 	var material = new THREE.MeshBasicMaterial( {color: 0xff0000 , transparent : true , opacity:0.5} );
 	pioneerCube = new THREE.Mesh( geometry, material );
 	if (voxel.length>0){
